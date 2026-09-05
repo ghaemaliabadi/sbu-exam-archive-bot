@@ -1,5 +1,5 @@
 {
-  "name": "serverless",
+  "name": "sbu-exam-archive-bot",
   "private": true,
   "devDependencies": {
     "@tgcloud/cli": "^0.1.1"

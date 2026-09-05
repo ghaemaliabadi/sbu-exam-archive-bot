@@ -1,10 +1,27 @@
-import { table, integer, text } from 'sdk/db';
+import { table, integer, text, json, index, uniqueIndex, sql } from 'sdk/db';
 
-// Your database tables go here as named exports. `npx tgcloud push` deploys this
-// file; `npx tgcloud migrate` applies the changes to the database.
+export const users = table('users', {
+  id: integer('id').primaryKey(),
+  step: text('step'),
+});
 
-// Uncomment to define your first table:
-// export const users = table('users', {
-//   id:   integer('id').primaryKey({ autoIncrement: true }),
-//   name: text('name').notNull(),
-// });
+export const submissions = table('submissions', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  userId: integer('user_id').notNull(),
+  messageIds: json('message_ids').notNull().default([]),
+  status: text('status').notNull().default('pending'),
+  createdAt: integer('created_at', { mode: 'timestamp' })
+    .notNull()
+    .default(sql`(unixepoch())`),
+}, (table) => ({
+  userIdx: index('idx_submissions_user_id').on(table.userId),
+}));
+
+export const draftFiles = table('draft_files', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  userId: integer('user_id').notNull(),
+  messageId: integer('message_id').notNull(),
+}, (table) => ({
+  userMessageIdx: uniqueIndex('uidx_draft_files_user_message')
+    .on(table.userId, table.messageId),
+}));

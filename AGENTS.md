@@ -7,7 +7,7 @@ and true. For the full SDK reference (db, Bot API, fetch), see
 
 ## What this project is
 
-A **Telegram Mini App bot** running on Telegram's serverless platform. You write
+A **Telegram bot** running on Telegram's serverless platform. You write
 JavaScript modules (database schema, shared library code, update handlers); the
 platform runs them in a V8 isolate. The `tgcloud` CLI syncs this local project
 with the bot's cloud environment — think `wrangler`/`vercel` + `drizzle-kit`.
